@@ -40,18 +40,26 @@ jobs:
         run: python poll.py
 
       - name: Commit state if changed
+        shell: bash
         run: |
+          set +e
           if ! git diff --quiet state.json 2>/dev/null; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add state.json
             git commit -m "chore: update alert state [skip ci]"
-            for i in 1 2 3; do
-              git pull --rebase origin main && git push && exit 0
-              echo "Push attempt $i failed, retrying in 2s..."
-              sleep 2
+
+            for attempt in 1 2 3 4 5; do
+              echo "Push attempt $attempt"
+              git pull --rebase origin main
+              if git push; then
+                echo "Pushed successfully on attempt $attempt"
+                exit 0
+              fi
+              echo "Push failed, retrying in 3 seconds..."
+              sleep 3
             done
-            echo "All push attempts failed."
+            echo "All 5 push attempts failed"
             exit 1
           else
             echo "No state change."
