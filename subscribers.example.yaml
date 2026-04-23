@@ -1,0 +1,27 @@
+# Copy this to `subscribers.yaml`, edit, and run `python manage.py sync`
+# to push it to your GitHub repo secret.
+#
+# Each subscriber needs:
+#   name: a short label. Letters, numbers, . _ - only.
+#   ntfy_topic: the topic name they're subscribed to in the ntfy app.
+#   team_filter: optional. List of MLB team abbreviations. Empty = all teams.
+#   max_run_diff: optional. Defaults to 1 (tied or 1-run games).
+#
+# Team abbreviations: see teams.py. Examples:
+#   LAD, SD, NYY, BOS, CHC, STL, SF, HOU, PHI, ATL, NYM, TB, etc.
+
+subscribers:
+  - name: mitch
+    ntfy_topic: mlb-alerts-xbgog1tjw5qmoqqznovybq
+    team_filter: []     # all games
+    max_run_diff: 1
+
+  - name: dave
+    ntfy_topic: dave-change-this-to-something-random
+    team_filter: [NYY]  # only Yankees games
+    max_run_diff: 1
+
+  - name: sara
+    ntfy_topic: sara-change-this-to-something-random
+    team_filter: [LAD, SF, SD]
+    max_run_diff: 2     # wants any within 2 runs

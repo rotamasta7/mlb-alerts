@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.venv/
+.env
+*.log
+
+# Real subscriber list stays local. Push it to GitHub Secret via manage.py sync.
+subscribers.yaml
