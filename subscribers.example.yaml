@@ -6,6 +6,16 @@
 #   ntfy_topic: the topic name they're subscribed to in the ntfy app.
 #   team_filter: optional. List of MLB team abbreviations. Empty = all teams.
 #   max_run_diff: optional. Defaults to 1 (tied or 1-run games).
+#   triggers: optional. Defaults to [close_late] for v2 backward compat.
+#
+# Available triggers:
+#   close_late               - tied or within max_run_diff in the 7th End or later
+#   walk_off                 - bottom 9th+, home team tied or trailing by 1
+#   extra_innings            - live game past the 9th
+#   lead_change              - team trailing after the 6th takes the lead in the 7th+
+#   bases_loaded_clutch      - bases loaded, 2 outs, inning 7+, game within 2 runs
+#   pitcher_flirting_history - starting pitcher 12+ Ks, or CG shutout past 7th
+#   grand_slam               - grand slam in the current or previous inning
 #
 # Team abbreviations: see teams.py. Examples:
 #   LAD, SD, NYY, BOS, CHC, STL, SF, HOU, PHI, ATL, NYM, TB, etc.
@@ -13,15 +23,27 @@
 subscribers:
   - name: mitch
     ntfy_topic: mlb-alerts-xbgog1tjw5qmoqqznovybq
-    team_filter: []     # all games
+    team_filter: []
     max_run_diff: 1
+    triggers:
+      - close_late
+      - walk_off
+      - extra_innings
+      - lead_change
+      - bases_loaded_clutch
+      - pitcher_flirting_history
+      - grand_slam
 
   - name: dave
     ntfy_topic: dave-change-this-to-something-random
-    team_filter: [NYY]  # only Yankees games
+    team_filter: [NYY]
     max_run_diff: 1
+    # triggers omitted → defaults to [close_late]
 
   - name: sara
     ntfy_topic: sara-change-this-to-something-random
     team_filter: [LAD, SF, SD]
-    max_run_diff: 2     # wants any within 2 runs
+    max_run_diff: 2
+    triggers:
+      - close_late
+      - walk_off

@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import logging
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime, timedelta, timezone
 from typing import Any
 from zoneinfo import ZoneInfo
@@ -40,6 +40,11 @@ class GameSnapshot:
     home_runs: int
     away_runs: int
     game_date_utc: str       # ISO UTC string
+    # v3 additions — needed by walk_off, lead_change, bases_loaded_clutch
+    is_top_inning: bool | None = None
+    outs: int | None = None
+    innings: list[dict[str, Any]] = field(default_factory=list)  # per-inning run arrays
+    runners: dict[str, Any] = field(default_factory=dict)        # offense.first/second/third
 
     @property
     def home_abbr(self) -> str:
@@ -68,6 +73,9 @@ class GameSnapshot:
     def gameday_url(self) -> str:
         return f"https://www.mlb.com/gameday/{self.game_pk}"
 
+    def inning_ordinal(self) -> str:
+        return _ordinal(self.inning) if self.inning else "?"
+
 
 def fetch_todays_games(now_utc: datetime | None = None) -> list[GameSnapshot]:
     """Return MLB games from yesterday ET through today ET.
@@ -83,7 +91,7 @@ def fetch_todays_games(now_utc: datetime | None = None) -> list[GameSnapshot]:
         "sportId": 1,
         "startDate": start_date,
         "endDate": end_date,
-        "hydrate": "linescore",
+        "hydrate": "linescore(matchup,runners)",
     }
     log.debug("GET schedule startDate=%s endDate=%s", start_date, end_date)
     resp = requests.get(
@@ -104,6 +112,30 @@ def fetch_todays_games(now_utc: datetime | None = None) -> list[GameSnapshot]:
         seen.add(s.game_pk)
         unique.append(s)
     return unique
+
+
+def fetch_play_by_play(game_pk: int) -> dict[str, Any]:
+    """Fetch the full play-by-play for one game. Returns dict with 'allPlays'."""
+    url = f"{BASE_URL}/game/{game_pk}/playByPlay"
+    resp = requests.get(
+        url,
+        headers={"User-Agent": USER_AGENT, "Accept": "application/json"},
+        timeout=TIMEOUT,
+    )
+    resp.raise_for_status()
+    return resp.json()
+
+
+def fetch_boxscore(game_pk: int) -> dict[str, Any]:
+    """Fetch the boxscore for one game. Returns dict with 'teams' containing per-pitcher stats."""
+    url = f"{BASE_URL}/game/{game_pk}/boxscore"
+    resp = requests.get(
+        url,
+        headers={"User-Agent": USER_AGENT, "Accept": "application/json"},
+        timeout=TIMEOUT,
+    )
+    resp.raise_for_status()
+    return resp.json()
 
 
 def _parse_schedule(payload: dict[str, Any]) -> list[GameSnapshot]:
@@ -139,6 +171,10 @@ def _parse_game(game: dict[str, Any]) -> GameSnapshot | None:
             home_runs=int((ls_teams.get("home") or {}).get("runs", 0) or 0),
             away_runs=int((ls_teams.get("away") or {}).get("runs", 0) or 0),
             game_date_utc=game.get("gameDate", ""),
+            is_top_inning=linescore.get("isTopInning"),
+            outs=linescore.get("outs"),
+            innings=linescore.get("innings") or [],
+            runners=linescore.get("offense") or {},
         )
     except (KeyError, ValueError, TypeError) as e:
         log.warning("Skipping malformed game: %s", e)

@@ -1,4 +1,11 @@
-"""Per-subscriber dedup state. One alert per (subscriber, game) per UTC day."""
+"""Per-subscriber dedup state. One alert per (subscriber, game_pk, trigger) per UTC day.
+
+Keys inside each subscriber's alerted set are strings of the form "<game_pk>:<trigger_name>".
+
+Migration: v2 stored bare integer gamePks (one alert per game per day, close_late only).
+On load, bare int entries are upgraded to "<pk>:close_late" so v2 state doesn't re-fire
+close_late on the first v3 run.
+"""
 
 from __future__ import annotations
 
@@ -15,13 +22,13 @@ log = logging.getLogger(__name__)
 class State:
     """Per-subscriber dedup set, stored as one JSON file."""
     date_utc: str = ""
-    alerted: dict[str, set[int]] = field(default_factory=dict)
+    alerted: dict[str, set[str]] = field(default_factory=dict)
 
-    def has_alerted(self, subscriber: str, game_pk: int) -> bool:
-        return game_pk in self.alerted.get(subscriber, set())
+    def has_alerted(self, subscriber: str, alert_key: str) -> bool:
+        return alert_key in self.alerted.get(subscriber, set())
 
-    def mark_alerted(self, subscriber: str, game_pk: int) -> None:
-        self.alerted.setdefault(subscriber, set()).add(game_pk)
+    def mark_alerted(self, subscriber: str, alert_key: str) -> None:
+        self.alerted.setdefault(subscriber, set()).add(alert_key)
 
     def reset_if_new_day(self, today_utc: str) -> None:
         if self.date_utc != today_utc:
@@ -45,7 +52,7 @@ class State:
             {
                 "date_utc": self.date_utc,
                 "alerted": {
-                    name: sorted(pks) for name, pks in sorted(self.alerted.items())
+                    name: sorted(keys) for name, keys in sorted(self.alerted.items())
                 },
                 "updated_at": datetime.now(timezone.utc).isoformat(),
             },
@@ -56,16 +63,29 @@ class State:
     def from_json(cls, text: str) -> "State":
         data = json.loads(text)
         alerted_raw = data.get("alerted", {}) or {}
-        # Backwards compatibility: old v1 state had a flat "alerted_game_pks".
+        # v1 legacy: flat "alerted_game_pks"
         if not alerted_raw and "alerted_game_pks" in data:
             alerted_raw = {"_legacy": data.get("alerted_game_pks") or []}
-        alerted: dict[str, set[int]] = {}
-        for name, pks in alerted_raw.items():
-            alerted[name] = set(int(x) for x in (pks or []))
+        alerted: dict[str, set[str]] = {}
+        for name, keys in alerted_raw.items():
+            upgraded: set[str] = set()
+            for k in (keys or []):
+                upgraded.add(_upgrade_key(k))
+            alerted[name] = upgraded
         return cls(
             date_utc=data.get("date_utc", ""),
             alerted=alerted,
         )
+
+
+def _upgrade_key(raw: object) -> str:
+    """v2 stored bare int game_pks; v3 uses '<pk>:<trigger>'."""
+    if isinstance(raw, int):
+        return f"{raw}:close_late"
+    s = str(raw)
+    if ":" not in s:
+        return f"{s}:close_late"
+    return s
 
 
 def load(path: str | Path) -> State:

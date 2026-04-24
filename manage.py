@@ -61,7 +61,11 @@ def cmd_list(_: argparse.Namespace) -> int:
     print(f"{len(subs)} subscriber(s):\n")
     for s in subs:
         teams = ",".join(s.get("team_filter") or []) or "all"
-        print(f"  - {s['name']:<12} topic={_mask(s['ntfy_topic'])}  teams={teams}  max_diff={s.get('max_run_diff', 1)}")
+        triggers = ",".join(s.get("triggers") or []) or "close_late"
+        print(
+            f"  - {s['name']:<12} topic={_mask(s['ntfy_topic'])}  "
+            f"teams={teams}  max_diff={s.get('max_run_diff', 1)}  triggers={triggers}"
+        )
     return 0
 
 
@@ -114,7 +118,12 @@ def cmd_validate(_: argparse.Namespace) -> int:
         return 1
     print(f"OK. {len(subs)} subscriber(s) validate cleanly.")
     for s in subs:
-        print(f"  - {s.name}: topic={_mask(s.ntfy_topic)}, filter={sorted(s.team_filter) or 'all'}, max_diff={s.max_run_diff}")
+        print(
+            f"  - {s.name}: topic={_mask(s.ntfy_topic)}, "
+            f"filter={sorted(s.team_filter) or 'all'}, "
+            f"max_diff={s.max_run_diff}, "
+            f"triggers={sorted(s.triggers)}"
+        )
     return 0
 
 
@@ -132,6 +141,7 @@ def cmd_sync(args: argparse.Namespace) -> int:
             "ntfy_topic": s.ntfy_topic,
             "team_filter": sorted(s.team_filter),
             "max_run_diff": s.max_run_diff,
+            "triggers": sorted(s.triggers),
         }
         for s in subs
     ])

@@ -19,6 +19,7 @@ log = logging.getLogger(__name__)
 
 
 _NAME_RE = re.compile(r"^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,31}$")
+_DEFAULT_TRIGGERS: frozenset[str] = frozenset({"close_late"})
 
 
 @dataclass(frozen=True)
@@ -27,6 +28,7 @@ class Subscriber:
     ntfy_topic: str
     team_filter: frozenset[str] = field(default_factory=frozenset)
     max_run_diff: int = 1
+    triggers: frozenset[str] = field(default_factory=lambda: _DEFAULT_TRIGGERS)
 
     def __post_init__(self) -> None:
         if not _NAME_RE.match(self.name):
@@ -43,17 +45,37 @@ class Subscriber:
             raise ValueError(
                 f"Subscriber '{self.name}' max_run_diff must be >= 0."
             )
+        # Lazy import to avoid cycles
+        from triggers import VALID_TRIGGERS
+        unknown = self.triggers - VALID_TRIGGERS
+        if unknown:
+            raise ValueError(
+                f"Subscriber '{self.name}' has unknown triggers: {sorted(unknown)}. "
+                f"Valid triggers: {sorted(VALID_TRIGGERS)}"
+            )
+        if not self.triggers:
+            raise ValueError(f"Subscriber '{self.name}' has no triggers configured.")
 
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> "Subscriber":
         raw_filter = data.get("team_filter") or []
         if isinstance(raw_filter, str):
             raw_filter = [p.strip() for p in raw_filter.split(",") if p.strip()]
+
+        raw_triggers = data.get("triggers")
+        if raw_triggers is None:
+            triggers = _DEFAULT_TRIGGERS
+        else:
+            if isinstance(raw_triggers, str):
+                raw_triggers = [p.strip() for p in raw_triggers.split(",") if p.strip()]
+            triggers = frozenset(str(t).strip() for t in raw_triggers if str(t).strip())
+
         return cls(
             name=str(data["name"]).strip(),
             ntfy_topic=str(data["ntfy_topic"]).strip(),
             team_filter=frozenset(str(t).strip().upper() for t in raw_filter if str(t).strip()),
             max_run_diff=int(data.get("max_run_diff", 1)),
+            triggers=triggers,
         )
 
 

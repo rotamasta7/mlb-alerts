@@ -6,56 +6,45 @@ import logging
 
 import requests
 
-from mlb import GameSnapshot
-
 log = logging.getLogger(__name__)
 
 TIMEOUT = 10
 
 
-def send_close_game_alert(
+def send_alert(
     server: str,
     topic: str,
-    game: GameSnapshot,
+    title: str,
+    body: str,
     priority: str = "high",
+    tags: str = "baseball",
+    click_url: str | None = None,
     dry_run: bool = False,
 ) -> bool:
-    """Push a close-late-game alert to ntfy. Returns True on success (or dry-run)."""
+    """POST a push alert to ntfy. Returns True on success (or dry-run)."""
     url = f"{server}/{topic}"
-    title = f"Close MLB game: {game.away_abbr} {game.away_runs} @ {game.home_abbr} {game.home_runs}"
-    body = (
-        f"{game.headline()}\n"
-        f"{game.away_name} vs {game.home_name}\n"
-        f"Run differential: {game.run_diff}\n"
-        f"Tap to open Gameday."
-    )
-
     headers = {
         "Title": title,
         "Priority": priority,
-        "Tags": "baseball,fire",
-        "Click": game.gameday_url(),
-        "Actions": f"view, Open Gameday, {game.gameday_url()}, clear=true",
+        "Tags": tags,
     }
+    if click_url:
+        headers["Click"] = click_url
+        headers["Actions"] = f"view, Open Gameday, {click_url}, clear=true"
 
     if dry_run:
-        log.info("[DRY RUN] would POST to %s", url)
+        log.info("[DRY RUN] POST %s", url)
         log.info("[DRY RUN] title: %s", title)
-        log.info("[DRY RUN] body: %s", body.replace("\n", " | "))
+        log.info("[DRY RUN] body:  %s", body.replace("\n", " | "))
         return True
 
     try:
-        resp = requests.post(
-            url,
-            data=body.encode("utf-8"),
-            headers=headers,
-            timeout=TIMEOUT,
-        )
+        resp = requests.post(url, data=body.encode("utf-8"), headers=headers, timeout=TIMEOUT)
         resp.raise_for_status()
-        log.info("Sent alert for game %s (%s)", game.game_pk, game.headline())
+        log.info("Sent alert '%s' to %s", title, _mask(topic))
         return True
     except requests.RequestException as e:
-        log.error("Failed to send ntfy alert for game %s: %s", game.game_pk, e)
+        log.error("Failed to send ntfy alert '%s': %s", title, e)
         return False
 
 
@@ -79,3 +68,9 @@ def send_plain(
     except requests.RequestException as e:
         log.error("ntfy send failed: %s", e)
         return False
+
+
+def _mask(topic: str) -> str:
+    if len(topic) <= 8:
+        return "***"
+    return topic[:4] + "…" + topic[-4:]

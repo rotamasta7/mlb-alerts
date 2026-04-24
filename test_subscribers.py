@@ -7,7 +7,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from subscribers import Subscriber, load_from_file, _build, _parse_json
+from subscribers import Subscriber, _build, _parse_json, load_from_file
 
 
 class TestSubscriber(unittest.TestCase):
@@ -17,6 +17,7 @@ class TestSubscriber(unittest.TestCase):
         self.assertEqual(s.ntfy_topic, "abc123456")
         self.assertEqual(s.team_filter, frozenset())
         self.assertEqual(s.max_run_diff, 1)
+        self.assertEqual(s.triggers, frozenset({"close_late"}))  # default for backward compat
 
     def test_full(self):
         s = Subscriber.from_dict({
@@ -24,9 +25,11 @@ class TestSubscriber(unittest.TestCase):
             "ntfy_topic": "dave-random-topic-abcdef",
             "team_filter": ["NYY", "bos"],
             "max_run_diff": 2,
+            "triggers": ["close_late", "walk_off", "extra_innings"],
         })
         self.assertEqual(s.team_filter, frozenset({"NYY", "BOS"}))
         self.assertEqual(s.max_run_diff, 2)
+        self.assertEqual(s.triggers, frozenset({"close_late", "walk_off", "extra_innings"}))
 
     def test_filter_as_csv_string(self):
         s = Subscriber.from_dict({
@@ -35,6 +38,14 @@ class TestSubscriber(unittest.TestCase):
             "team_filter": "NYY, BOS , LAD",
         })
         self.assertEqual(s.team_filter, frozenset({"NYY", "BOS", "LAD"}))
+
+    def test_triggers_as_csv_string(self):
+        s = Subscriber.from_dict({
+            "name": "eve",
+            "ntfy_topic": "abc123456",
+            "triggers": "close_late, walk_off",
+        })
+        self.assertEqual(s.triggers, frozenset({"close_late", "walk_off"}))
 
     def test_bad_name_rejected(self):
         with self.assertRaises(ValueError):
@@ -47,6 +58,30 @@ class TestSubscriber(unittest.TestCase):
     def test_negative_diff_rejected(self):
         with self.assertRaises(ValueError):
             Subscriber.from_dict({"name": "dave", "ntfy_topic": "abc123456", "max_run_diff": -1})
+
+    def test_unknown_trigger_rejected(self):
+        with self.assertRaises(ValueError):
+            Subscriber.from_dict({
+                "name": "dave", "ntfy_topic": "abc123456",
+                "triggers": ["close_late", "made_up_trigger"],
+            })
+
+    def test_empty_triggers_rejected(self):
+        with self.assertRaises(ValueError):
+            Subscriber.from_dict({
+                "name": "dave", "ntfy_topic": "abc123456",
+                "triggers": [],
+            })
+
+    def test_all_triggers_accepted(self):
+        s = Subscriber.from_dict({
+            "name": "mitch", "ntfy_topic": "abc123456",
+            "triggers": [
+                "close_late", "walk_off", "extra_innings", "lead_change",
+                "bases_loaded_clutch", "pitcher_flirting_history", "grand_slam",
+            ],
+        })
+        self.assertEqual(len(s.triggers), 7)
 
 
 class TestParsing(unittest.TestCase):
@@ -68,6 +103,14 @@ class TestParsing(unittest.TestCase):
                 {"name": "mitch", "ntfy_topic": "xyz123456"},
             ])
 
+    def test_legacy_json_without_triggers_still_works(self):
+        """v2 SUBSCRIBERS_JSON had no `triggers` field. Ensure it still parses."""
+        subs = _parse_json(json.dumps([
+            {"name": "Mitch", "ntfy_topic": "mlb-alerts-xxx",
+             "team_filter": [], "max_run_diff": 1},
+        ]))
+        self.assertEqual(subs[0].triggers, frozenset({"close_late"}))
+
     def test_load_from_yaml_file(self):
         try:
             import yaml  # noqa: F401
@@ -80,10 +123,12 @@ class TestParsing(unittest.TestCase):
                 "  - name: mitch\n"
                 "    ntfy_topic: mlb-alerts-xbgog1tjw5qmoqqznovybq\n"
                 "    team_filter: [LAD, NYY]\n"
+                "    triggers: [close_late, walk_off]\n"
             )
             subs = load_from_file(p)
             self.assertEqual(len(subs), 1)
             self.assertEqual(subs[0].team_filter, frozenset({"LAD", "NYY"}))
+            self.assertEqual(subs[0].triggers, frozenset({"close_late", "walk_off"}))
 
 
 if __name__ == "__main__":

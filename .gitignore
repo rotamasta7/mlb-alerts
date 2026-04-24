@@ -6,3 +6,7 @@ __pycache__/
 
 # Real subscriber list stays local. Push it to GitHub Secret via manage.py sync.
 subscribers.yaml
+
+# Local prototype scratch + personal handover doc. Contains sensitive data
+# (ntfy topic, work email) — must NEVER be committed to the public repo.
+MLB Alerts/
