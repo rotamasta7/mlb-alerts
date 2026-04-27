@@ -1,17 +1,11 @@
 {
-  "date_utc": "2026-04-26",
+  "date_utc": "2026-04-27",
   "alerted": {
     "Mitch": [
-      "822911:close_late",
-      "823068:close_late",
-      "823797:pitcher_flirting_history",
-      "823799:close_late",
-      "824528:lead_change",
-      "824612:close_late",
-      "824612:extra_innings",
-      "825094:grand_slam",
-      "825094:lead_change"
+      "824122:close_late",
+      "824122:extra_innings",
+      "824122:walk_off"
     ]
   },
-  "updated_at": "2026-04-26T23:51:46.865638+00:00"
+  "updated_at": "2026-04-27T01:17:52.490111+00:00"
 }
