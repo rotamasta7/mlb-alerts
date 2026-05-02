@@ -3,9 +3,11 @@
   "alerted": {
     "Mitch": [
       "823715:lead_change",
+      "823876:pitcher_flirting_history",
       "824041:close_late",
-      "824685:close_late"
+      "824685:close_late",
+      "825014:bases_loaded_clutch"
     ]
   },
-  "updated_at": "2026-05-02T21:23:18.498431+00:00"
+  "updated_at": "2026-05-02T22:03:36.570354+00:00"
 }
