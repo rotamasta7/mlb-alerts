@@ -3,6 +3,8 @@
   "alerted": {
     "Mitch": [
       "823221:close_late",
+      "823221:extra_innings",
+      "823221:walk_off",
       "823305:close_late",
       "823305:extra_innings",
       "824444:bases_loaded_clutch",
@@ -12,5 +14,5 @@
       "824845:close_late"
     ]
   },
-  "updated_at": "2026-05-10T22:41:00.242102+00:00"
+  "updated_at": "2026-05-10T23:34:34.801207+00:00"
 }
