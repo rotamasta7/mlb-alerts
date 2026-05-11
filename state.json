@@ -1,18 +1,5 @@
 {
-  "date_utc": "2026-05-10",
-  "alerted": {
-    "Mitch": [
-      "823221:close_late",
-      "823221:extra_innings",
-      "823221:walk_off",
-      "823305:close_late",
-      "823305:extra_innings",
-      "824444:bases_loaded_clutch",
-      "824444:close_late",
-      "824444:extra_innings",
-      "824444:walk_off",
-      "824845:close_late"
-    ]
-  },
-  "updated_at": "2026-05-10T23:34:34.801207+00:00"
+  "date_utc": "2026-05-11",
+  "alerted": {},
+  "updated_at": "2026-05-11T01:27:31.258229+00:00"
 }
