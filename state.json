@@ -1,12 +1,5 @@
 {
-  "date_utc": "2026-05-20",
-  "alerted": {
-    "Mitch": [
-      "822977:lead_change",
-      "823134:close_late",
-      "823704:close_late",
-      "824355:close_late"
-    ]
-  },
-  "updated_at": "2026-05-20T23:56:39.477076+00:00"
+  "date_utc": "2026-05-21",
+  "alerted": {},
+  "updated_at": "2026-05-21T02:58:33.385380+00:00"
 }
