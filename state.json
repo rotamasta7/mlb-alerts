@@ -2,8 +2,10 @@
   "date_utc": "2026-05-30",
   "alerted": {
     "Mitch": [
+      "822731:lead_change",
+      "822893:lead_change",
       "822975:grand_slam"
     ]
   },
-  "updated_at": "2026-05-30T21:41:04.077437+00:00"
+  "updated_at": "2026-05-30T22:37:48.058657+00:00"
 }
