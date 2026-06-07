@@ -1,12 +1,9 @@
 {
-  "date_utc": "2026-06-06",
+  "date_utc": "2026-06-07",
   "alerted": {
     "Mitch": [
-      "823048:close_late",
-      "823697:close_late",
-      "823697:walk_off",
-      "824669:close_late"
+      "822891:pitcher_flirting_history"
     ]
   },
-  "updated_at": "2026-06-06T23:45:56.217200+00:00"
+  "updated_at": "2026-06-07T01:58:05.309217+00:00"
 }
