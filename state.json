@@ -1,12 +1,5 @@
 {
-  "date_utc": "2026-06-09",
-  "alerted": {
-    "Mitch": [
-      "824025:close_late",
-      "824025:extra_innings",
-      "824025:walk_off",
-      "824829:grand_slam"
-    ]
-  },
-  "updated_at": "2026-06-09T23:41:55.023178+00:00"
+  "date_utc": "2026-06-10",
+  "alerted": {},
+  "updated_at": "2026-06-10T01:52:47.874760+00:00"
 }
