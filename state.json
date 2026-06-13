@@ -1,5 +1,11 @@
 {
   "date_utc": "2026-06-13",
-  "alerted": {},
-  "updated_at": "2026-06-13T21:35:40.112930+00:00"
+  "alerted": {
+    "Mitch": [
+      "823369:close_late",
+      "824587:pitcher_flirting_history",
+      "824749:close_late"
+    ]
+  },
+  "updated_at": "2026-06-13T22:41:29.591727+00:00"
 }
