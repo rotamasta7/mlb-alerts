@@ -2,10 +2,12 @@
   "date_utc": "2026-06-23",
   "alerted": {
     "Mitch": [
+      "822799:close_late",
+      "822799:extra_innings",
       "822800:close_late",
       "823040:close_late",
       "823692:close_late"
     ]
   },
-  "updated_at": "2026-06-23T22:20:24.920396+00:00"
+  "updated_at": "2026-06-23T23:32:21.183870+00:00"
 }
