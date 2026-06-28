@@ -7,11 +7,15 @@
       "823362:close_late",
       "823608:lead_change",
       "823686:close_late",
+      "823769:close_late",
+      "823769:extra_innings",
+      "823769:lead_change",
+      "823769:walk_off",
       "824011:grand_slam",
       "824256:close_late",
       "824421:close_late",
       "824825:close_late"
     ]
   },
-  "updated_at": "2026-06-28T20:13:06.680358+00:00"
+  "updated_at": "2026-06-28T21:19:45.301963+00:00"
 }
