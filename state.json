@@ -2,9 +2,16 @@
   "date_utc": "2026-06-28",
   "alerted": {
     "Mitch": [
+      "822795:close_late",
+      "823037:close_late",
+      "823362:close_late",
+      "823608:lead_change",
+      "823686:close_late",
+      "824011:grand_slam",
+      "824256:close_late",
       "824421:close_late",
       "824825:close_late"
     ]
   },
-  "updated_at": "2026-06-28T18:57:34.093629+00:00"
+  "updated_at": "2026-06-28T20:13:06.680358+00:00"
 }
