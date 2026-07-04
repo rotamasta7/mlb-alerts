@@ -1,5 +1,11 @@
 {
   "date_utc": "2026-07-04",
-  "alerted": {},
-  "updated_at": "2026-07-04T01:16:49.336355+00:00"
+  "alerted": {
+    "Mitch": [
+      "825062:close_late",
+      "825062:extra_innings",
+      "825062:walk_off"
+    ]
+  },
+  "updated_at": "2026-07-04T04:54:18.100941+00:00"
 }
