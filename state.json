@@ -3,8 +3,10 @@
   "alerted": {
     "Mitch": [
       "822715:close_late",
-      "824415:close_late"
+      "824415:close_late",
+      "825061:close_late",
+      "825061:lead_change"
     ]
   },
-  "updated_at": "2026-07-05T21:39:34.670864+00:00"
+  "updated_at": "2026-07-05T22:37:48.962398+00:00"
 }
