@@ -1,5 +1,10 @@
 {
-  "date_utc": "2026-07-06",
-  "alerted": {},
-  "updated_at": "2026-07-06T23:56:49.812139+00:00"
+  "date_utc": "2026-07-07",
+  "alerted": {
+    "Mitch": [
+      "824900:extra_innings",
+      "824900:lead_change"
+    ]
+  },
+  "updated_at": "2026-07-07T02:48:40.270169+00:00"
 }
