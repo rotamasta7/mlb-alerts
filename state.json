@@ -1,11 +1,5 @@
 {
-  "date_utc": "2026-07-07",
-  "alerted": {
-    "Mitch": [
-      "823361:grand_slam",
-      "824900:extra_innings",
-      "824900:lead_change"
-    ]
-  },
-  "updated_at": "2026-07-07T23:14:53.757608+00:00"
+  "date_utc": "2026-07-08",
+  "alerted": {},
+  "updated_at": "2026-07-08T00:12:34.657055+00:00"
 }
