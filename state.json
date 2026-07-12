@@ -2,8 +2,11 @@
   "date_utc": "2026-07-12",
   "alerted": {
     "Mitch": [
+      "822876:close_late",
+      "823029:bases_loaded_clutch",
+      "823029:close_late",
       "823681:close_late"
     ]
   },
-  "updated_at": "2026-07-12T20:22:15.445298+00:00"
+  "updated_at": "2026-07-12T21:09:38.221996+00:00"
 }
