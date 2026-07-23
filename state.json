@@ -1,5 +1,9 @@
 {
   "date_utc": "2026-07-23",
-  "alerted": {},
-  "updated_at": "2026-07-23T17:43:58.196272+00:00"
+  "alerted": {
+    "Mitch": [
+      "824406:pitcher_flirting_history"
+    ]
+  },
+  "updated_at": "2026-07-23T18:49:33.143396+00:00"
 }
