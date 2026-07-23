@@ -2,8 +2,10 @@
   "date_utc": "2026-07-23",
   "alerted": {
     "Mitch": [
+      "824406:close_late",
+      "824406:extra_innings",
       "824406:pitcher_flirting_history"
     ]
   },
-  "updated_at": "2026-07-23T18:49:33.143396+00:00"
+  "updated_at": "2026-07-23T20:02:48.515848+00:00"
 }
