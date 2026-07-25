@@ -7,8 +7,11 @@
       "823352:extra_innings",
       "823434:bases_loaded_clutch",
       "823434:close_late",
-      "823434:pitcher_flirting_history"
+      "823434:pitcher_flirting_history",
+      "824244:close_late",
+      "824244:lead_change",
+      "824244:walk_off"
     ]
   },
-  "updated_at": "2026-07-25T18:09:55.434257+00:00"
+  "updated_at": "2026-07-25T19:31:53.896345+00:00"
 }
