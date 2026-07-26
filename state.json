@@ -6,6 +6,8 @@
       "822950:pitcher_flirting_history",
       "823027:pitcher_flirting_history",
       "823028:close_late",
+      "823194:close_late",
+      "823194:walk_off",
       "823354:grand_slam",
       "823755:pitcher_flirting_history",
       "824246:close_late",
@@ -17,5 +19,5 @@
       "824810:walk_off"
     ]
   },
-  "updated_at": "2026-07-26T21:38:09.357511+00:00"
+  "updated_at": "2026-07-26T22:37:32.079835+00:00"
 }
