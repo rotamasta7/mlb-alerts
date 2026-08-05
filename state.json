@@ -1,12 +1,9 @@
 {
-  "date_utc": "2026-08-04",
+  "date_utc": "2026-08-05",
   "alerted": {
     "Mitch": [
-      "823431:close_late",
-      "823431:grand_slam",
-      "823431:lead_change",
-      "824731:grand_slam"
+      "824484:close_late"
     ]
   },
-  "updated_at": "2026-08-04T23:43:17.536475+00:00"
+  "updated_at": "2026-08-05T01:05:44.799006+00:00"
 }
