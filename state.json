@@ -6,6 +6,7 @@
       "823187:close_late",
       "823187:lead_change",
       "823263:close_late",
+      "823263:extra_innings",
       "823512:lead_change",
       "823917:close_late",
       "824563:close_late",
@@ -14,5 +15,5 @@
       "825046:walk_off"
     ]
   },
-  "updated_at": "2026-08-12T22:40:34.053161+00:00"
+  "updated_at": "2026-08-12T23:21:28.597426+00:00"
 }
