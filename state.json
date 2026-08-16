@@ -10,6 +10,7 @@
       "823590:close_late",
       "823670:close_late",
       "823670:grand_slam",
+      "823670:lead_change",
       "823990:close_late",
       "823990:pitcher_flirting_history",
       "824236:close_late",
@@ -20,5 +21,5 @@
       "824966:close_late"
     ]
   },
-  "updated_at": "2026-08-16T20:20:50.270623+00:00"
+  "updated_at": "2026-08-16T20:42:27.520766+00:00"
 }
