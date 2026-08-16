@@ -13,6 +13,7 @@
       "823670:lead_change",
       "823990:close_late",
       "823990:pitcher_flirting_history",
+      "823991:pitcher_flirting_history",
       "824236:close_late",
       "824477:bases_loaded_clutch",
       "824477:close_late",
@@ -21,5 +22,5 @@
       "824966:close_late"
     ]
   },
-  "updated_at": "2026-08-16T21:52:58.748994+00:00"
+  "updated_at": "2026-08-16T22:05:35.982013+00:00"
 }
