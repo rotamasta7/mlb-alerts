@@ -1,26 +1,5 @@
 {
-  "date_utc": "2026-08-16",
-  "alerted": {
-    "Mitch": [
-      "822774:close_late",
-      "822774:walk_off",
-      "822941:close_late",
-      "822941:extra_innings",
-      "822941:walk_off",
-      "823590:close_late",
-      "823670:close_late",
-      "823670:grand_slam",
-      "823670:lead_change",
-      "823990:close_late",
-      "823990:pitcher_flirting_history",
-      "823991:pitcher_flirting_history",
-      "824236:close_late",
-      "824477:bases_loaded_clutch",
-      "824477:close_late",
-      "824480:bases_loaded_clutch",
-      "824480:close_late",
-      "824966:close_late"
-    ]
-  },
-  "updated_at": "2026-08-16T23:56:23.089037+00:00"
+  "date_utc": "2026-08-17",
+  "alerted": {},
+  "updated_at": "2026-08-17T01:00:23.799117+00:00"
 }
