@@ -2,10 +2,11 @@
   "date_utc": "2026-08-22",
   "alerted": {
     "Mitch": [
+      "822857:close_late",
       "823830:close_late",
       "823830:walk_off",
       "824559:close_late"
     ]
   },
-  "updated_at": "2026-08-22T02:04:39.275597+00:00"
+  "updated_at": "2026-08-22T03:03:10.941365+00:00"
 }
