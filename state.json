@@ -6,6 +6,7 @@
       "823101:close_late",
       "823101:extra_innings",
       "823509:bases_loaded_clutch",
+      "823509:close_late",
       "823830:close_late",
       "823830:walk_off",
       "823911:close_late",
@@ -13,5 +14,5 @@
       "824559:close_late"
     ]
   },
-  "updated_at": "2026-08-22T20:06:59.520948+00:00"
+  "updated_at": "2026-08-22T20:35:02.720825+00:00"
 }
