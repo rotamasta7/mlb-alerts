@@ -2,9 +2,11 @@
   "date_utc": "2026-08-25",
   "alerted": {
     "Mitch": [
+      "823260:bases_loaded_clutch",
       "823260:close_late",
+      "823260:extra_innings",
       "823260:walk_off"
     ]
   },
-  "updated_at": "2026-08-25T04:57:20.158342+00:00"
+  "updated_at": "2026-08-25T05:29:13.238194+00:00"
 }
