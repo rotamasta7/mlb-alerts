@@ -3,8 +3,10 @@
   "alerted": {
     "Mitch": [
       "823826:close_late",
+      "823989:extra_innings",
+      "823989:lead_change",
       "825042:close_late"
     ]
   },
-  "updated_at": "2026-08-26T04:06:35.907949+00:00"
+  "updated_at": "2026-08-26T04:51:21.890817+00:00"
 }
