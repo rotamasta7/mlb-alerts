@@ -1,18 +1,5 @@
 {
-  "date_utc": "2026-08-26",
-  "alerted": {
-    "Mitch": [
-      "823180:close_late",
-      "823180:grand_slam",
-      "823180:lead_change",
-      "823826:close_late",
-      "823988:close_late",
-      "823988:lead_change",
-      "823988:walk_off",
-      "823989:extra_innings",
-      "823989:lead_change",
-      "825042:close_late"
-    ]
-  },
-  "updated_at": "2026-08-26T22:47:01.469986+00:00"
+  "date_utc": "2026-08-27",
+  "alerted": {},
+  "updated_at": "2026-08-27T04:04:16.001969+00:00"
 }
